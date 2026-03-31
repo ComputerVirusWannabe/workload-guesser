@@ -1,0 +1,2 @@
+# Trained model artefacts (*.pkl, *.joblib) are excluded via .gitignore.
+# This file only exists to ensure the models/ directory is tracked by git.

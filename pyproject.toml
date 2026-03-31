@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "workload-guesser"
+version = "0.1.0"
+description = "ML model for predicting UVA course difficulty and workload"
+requires-python = ">=3.9"
+dependencies = [
+    "scikit-learn>=1.3",
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "joblib>=1.3",
+]
+
+[project.scripts]
+workload-guesser = "workload_guesser.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["workload_guesser*"]
