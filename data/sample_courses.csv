@@ -1,0 +1,47 @@
+course_id,department,level,credits,title,description,num_assignments,num_exams,num_projects,gpa_avg,workload
+CS1110,CS,1000,3,Introduction to Programming,"Introduction to programming using Python. Students complete weekly homework assignments covering basic data types, control flow, functions, and file I/O. Two midterm exams and a final exam are required.",8,3,0,3.2,medium
+CS2100,CS,2000,3,Data Structures and Algorithms 1,"Covers fundamental data structures: linked lists, stacks, queues, trees, and hash tables. Weekly programming assignments, two midterms, and a final exam. Students implement algorithms from scratch in Java.",10,3,0,2.9,high
+CS3130,CS,3000,3,Computer Systems and Organization,"Low-level computing including assembly language, memory management, and operating system concepts. Heavy weekly lab assignments, multiple exams, and a substantial semester project.",10,3,1,2.7,high
+CS4102,CS,4000,3,Algorithms,"Rigorous analysis of algorithms and complexity theory. Weekly problem sets, a midterm, and a final exam. Course demands strong mathematical background and extensive written proofs.",12,2,0,2.6,high
+CS4457,CS,4000,3,Computer Networks,"Study of network protocols, architecture, and socket programming. Several programming projects including implementing TCP over UDP, weekly homework, two exams.",6,2,3,3.0,high
+CS4501,CS,4000,3,Machine Learning,"Introduction to supervised and unsupervised learning. Weekly programming assignments using scikit-learn and PyTorch. Midterm exam, final project with paper, and weekly quizzes.",8,1,1,3.1,high
+ECE2330,ECE,2000,3,Digital Logic Design,"Fundamentals of digital circuits and Boolean algebra. Lab assignments every two weeks, weekly homework, midterm and final exam.",6,2,0,3.0,medium
+ECE3750,ECE,3000,3,Signals and Systems,"Mathematical treatment of continuous and discrete-time signals. Weekly problem sets, two midterm exams, and a comprehensive final. Demanding mathematical content.",10,3,0,2.8,high
+ECE4440,ECE,4000,3,Digital Signal Processing,"Advanced signal processing theory and applications. Weekly problem sets, MATLAB assignments, two exams, and a design project.",8,2,1,2.9,high
+MATH1210,MATH,1000,4,Calculus I,"Introduction to differential calculus. Weekly homework assignments, two midterm exams and a final. Covers limits, derivatives, and applications.",8,3,0,3.0,medium
+MATH1220,MATH,1000,4,Calculus II,"Integral calculus and infinite series. Weekly homework, quizzes every two weeks, two midterms and a final. Faster pace than Calculus I.",10,3,0,2.9,medium
+MATH3351,MATH,3000,3,Elementary Linear Algebra,"Abstract linear algebra with proofs. Weekly homework assignments, two midterms and a final. Emphasis on theoretical reasoning.",8,3,0,3.1,medium
+MATH4310,MATH,4000,3,Introduction to Real Analysis,"Rigorous treatment of calculus including epsilon-delta proofs. Weekly proof-based homework, two midterms, final exam. Considered one of the most challenging undergraduate math courses.",10,3,0,2.5,high
+MATH5310,MATH,5000,3,Real Analysis,"Graduate-level real analysis covering measure theory and functional analysis. Weekly problem sets with in-depth proofs, midterm and final exam.",10,2,0,3.2,high
+CHEM1410,CHEM,1000,3,General Chemistry I,"Introduction to chemistry including atomic structure and stoichiometry. Weekly problem sets, lab reports, two midterms and a final.",8,3,0,2.9,medium
+CHEM3510,CHEM,3000,3,Organic Chemistry I,"Mechanistic organic chemistry. Notorious for demanding workload: weekly homework, lab reports every week, two midterms and a final. Lab takes 3 hours per session.",12,3,0,2.6,high
+BIOL2100,BIOL,2000,3,Cell Biology,"Molecular and cellular biology concepts. Weekly reading assignments, two exams, lab reports, and a final exam.",6,3,0,3.1,medium
+BIOL3040,BIOL,3000,3,Genetics,"Classical and molecular genetics. Weekly problem sets, two midterms, final, and a research paper.",8,3,1,3.0,medium
+PHYS1425,PHYS,1000,4,General Physics I,"Mechanics and thermodynamics. Weekly homework, recitation quizzes, two midterms and a final. Lab each week with report due.",10,3,0,2.8,medium
+PHYS2415,PHYS,2000,4,General Physics II,"Electricity, magnetism, and optics. Weekly homework, lab reports, two midterms and a cumulative final.",10,3,0,2.8,medium
+ECON2010,ECON,2000,3,Principles of Microeconomics,"Introduction to microeconomic theory and markets. Three exams and weekly reading; minimal homework assignments.",0,3,0,3.3,low
+ECON3010,ECON,3000,3,Intermediate Microeconomics,"Mathematical treatment of consumer and producer theory. Weekly problem sets, two midterms and a final.",6,3,0,3.0,medium
+PSYC2200,PSYC,2000,3,Developmental Psychology,"Survey of human development from birth through adulthood. Two short papers, two exams, and weekly reading quizzes.",2,2,0,3.4,low
+PSYC3160,PSYC,3000,3,Research Methods in Psychology,"Statistical methods and experimental design. Weekly assignments, midterm, final, and a research project with written report.",8,2,1,3.1,medium
+HIST2001,HIST,2000,3,History of the United States I,"Survey of American history to the Civil War. Three essays, two exams, and weekly reading.",3,2,0,3.3,low
+HIST3501,HIST,3000,3,Modern Europe,"Advanced reading-intensive seminar. Weekly response papers, a long research paper, and participation in discussion.",8,1,1,3.2,medium
+ENGL1510,ENGL,1000,3,Writing and Critical Inquiry,"Introduction to academic writing. Four major essays and multiple drafts required. Weekly writing workshops.",4,0,0,3.6,low
+ENGL3820,ENGL,3000,3,American Literature,"Close reading and analysis of canonical American texts. Weekly responses, two essays, midterm and final.",4,2,0,3.3,medium
+STS1500,STS,1000,3,Science Technology and Society,"Introductory survey of how technology shapes society. Two short papers, a midterm, and a final. Minimal homework.",2,2,0,3.5,low
+STS3250,STS,3000,3,Ethics of Artificial Intelligence,"Seminar discussion of AI ethics. Weekly one-page responses, midterm essay, and a final research paper.",8,0,1,3.4,medium
+KINE1480,KINE,1000,1,Swimming for Fitness,"Beginner swimming course. Pass/fail. Attendance is the primary requirement; no exams or written assignments.",0,0,0,4.0,low
+KINE3350,KINE,3000,3,Exercise Physiology,"Physiology of physical activity and exercise. Lab assignments, two midterms, final, and a fitness project.",4,3,1,3.2,medium
+MUBD1010,MUBD,1000,1,Concert Band,"Performance ensemble. Weekly rehearsals and concerts. Graded on attendance and performance quality.",0,0,0,3.9,low
+ARTS2360,ARTS,2000,3,Introduction to Drawing,"Studio art course focused on observational drawing. Weekly studio assignments and a portfolio review at end of semester.",8,0,0,3.7,low
+ARTS3560,ARTS,3000,3,Advanced Painting,"Upper-division studio art. Weekly critiques, project proposals, and a final portfolio. Requires significant out-of-class studio time.",10,0,1,3.6,medium
+NURS2300,NURS,2000,3,Foundations of Community Health,"Introduction to public health nursing concepts. Two exams, short weekly reflections, and a community assessment project.",2,2,1,3.4,low
+NURS4560,NURS,4000,4,Clinical Practicum,"Advanced clinical nursing practice. Extensive clinical hours, weekly reflective journals, case study presentations, and a comprehensive final portfolio.",8,1,1,3.2,high
+STAT3120,STAT,3000,3,Introduction to Mathematical Statistics,"Probability theory, distributions, and inference. Weekly problem sets, two midterms and a final exam.",8,3,0,3.0,medium
+STAT4120,STAT,4000,3,Mathematical Statistics,"Advanced statistical theory and estimation. Weekly problem sets with proofs, midterm and final exam.",10,2,0,2.9,high
+APMA3100,APMA,3000,3,Probability,"Applied probability theory for engineers. Weekly homework, two midterms and a final exam.",8,3,0,3.0,medium
+APMA4140,APMA,4000,3,Mathematics of Machine Learning,"Linear algebra and optimization for machine learning. Demanding weekly problem sets, midterm and final exam, and a project.",10,2,1,2.8,high
+SYS4021,SYS,4000,3,Linear Statistical Models,"Statistical modeling and regression analysis. Weekly homework assignments, two exams, and a substantial data analysis project.",8,2,1,3.0,high
+COMM1710,COMM,1000,3,Introduction to Media Studies,"Survey of mass media history and theory. Two exams and a short paper; minimal weekly work.",0,2,0,3.5,low
+COMM3320,COMM,3000,3,Journalism and Society,"Reading-heavy seminar with weekly reaction posts, a midterm exam, and a final investigative journalism project.",6,1,1,3.3,medium
+PHIL1010,PHIL,1000,3,Introduction to Philosophy,"Survey of major philosophical problems and thinkers. Weekly readings, two take-home essays, and a final exam.",2,1,0,3.5,low
+PHIL3500,PHIL,3000,3,Epistemology,"Advanced seminar on theories of knowledge. Weekly response papers, a midterm essay, and a long final paper.",8,0,1,3.2,medium
