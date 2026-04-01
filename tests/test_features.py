@@ -83,7 +83,7 @@ class TestMetadataTransformer:
     def test_output_shape(self, sample_df: pd.DataFrame) -> None:
         meta = MetadataTransformer()
         result = meta.fit_transform(sample_df)
-        assert result.shape == (len(sample_df), 3)
+        assert result.shape == (len(sample_df), 6)
 
     def test_level_normalised(self) -> None:
         df = pd.DataFrame({"level": [2000], "credits": [3], "gpa_avg": [3.0]})
