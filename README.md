@@ -28,8 +28,6 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-Python 3.9 or later is required.
-
 ## Usage
 
 ### Interactive mode
@@ -42,17 +40,6 @@ workload-guesser
 
 The program trains on the built-in sample data, then prompts for course
 details and gives a prediction with a confidence breakdown.
-
-### Command-line prediction
-
-```bash
-workload-guesser predict \
-  --department CS \
-  --level 4000 \
-  --credits 3 \
-  --description "Weekly problem sets, two midterms, a final exam, and a semester project." \
-  --gpa-avg 2.7
-```
 
 Example output:
 
@@ -78,32 +65,6 @@ workload-guesser predict \
   --model models/workload.pkl \
   --department MATH --level 4000 --credits 3 \
   --description "Rigorous proof-based course with weekly homework and three exams."
-```
-
-### Python API
-
-```python
-from workload_guesser import WorkloadPredictor
-from workload_guesser.data import course_to_dataframe
-
-# Train
-predictor = WorkloadPredictor()
-predictor.train()          # uses built-in data by default
-
-# Predict a single course
-df = course_to_dataframe(
-    department="CS",
-    level=4000,
-    credits=3,
-    description="Rigorous algorithms course: weekly problem sets, two midterms, final.",
-    gpa_avg=2.6,
-)
-label = predictor.predict(df)[0]        # 'low' | 'medium' | 'high'
-proba = predictor.predict_proba(df)     # {'low': 0.03, 'medium': 0.15, 'high': 0.82}
-
-# Save and reload
-predictor.save("models/workload.pkl")
-loaded = WorkloadPredictor.load("models/workload.pkl")
 ```
 
 ## Running tests
