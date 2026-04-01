@@ -77,9 +77,9 @@ def cmd_predict(args: argparse.Namespace) -> None:
         description=args.description,
         title=args.title or "",
         gpa_avg=args.gpa_avg,
-        num_assignments=num_assignments,
-        num_exams=num_exams,
-        num_projects=num_projects,
+        num_assignments=args.num_assignments,
+        num_exams=args.num_exams,
+        num_projects=args.num_projects,
     )
 
     label = predictor.predict(df)[0]
@@ -129,6 +129,9 @@ def cmd_interactive(args: argparse.Namespace) -> None:  # noqa: ARG001
             credits=credits_,
             description=description,
             gpa_avg=gpa_avg,
+            num_assignments=num_assignments,
+            num_exams=num_exams,
+            num_projects=num_projects,
         )
         label = predictor.predict(df)[0]
         proba = predictor.predict_proba(df)
@@ -163,6 +166,27 @@ def _build_parser() -> argparse.ArgumentParser:
         type=float,
         default=None,
         help="Historical average GPA (optional).",
+    )
+    pred_p.add_argument(
+        "--num-assignments",
+        dest="num_assignments",
+        type=int,
+        default=0,
+        help="Number of assignments (optional).",
+    )
+    pred_p.add_argument(
+        "--num-exams",
+        dest="num_exams",
+        type=int,
+        default=0,
+        help="Number of exams (optional).",
+    )
+    pred_p.add_argument(
+        "--num-projects",
+        dest="num_projects",
+        type=int,
+        default=0,
+        help="Number of projects (optional).",
     )
     pred_p.set_defaults(func=cmd_predict)
 
