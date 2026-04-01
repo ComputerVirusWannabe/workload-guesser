@@ -106,6 +106,9 @@ class MetadataTransformer(BaseEstimator, TransformerMixin):
     * ``credits`` – credit hours as-is.
     * ``gpa_avg`` – average historical GPA (0–4 scale); missing values are
       imputed with 3.0 (a neutral, B-average assumption).
+    * ``num_assignments`` – number of assignments
+    * ``num_exams`` – number of exams
+    * ``num_projects`` – number of projects
     """
 
     #: Columns expected (and their fallback default values).
@@ -113,24 +116,36 @@ class MetadataTransformer(BaseEstimator, TransformerMixin):
         "level": 1000.0,
         "credits": 3.0,
         "gpa_avg": 3.0,
+        "num_assignments": 0,
+        "num_exams": 0,
+        "num_projects": 0,
     }
 
-    def fit(self, X: pd.DataFrame, y: Any = None) -> "MetadataTransformer":  # noqa: N803
+    def fit(self, X: pd.DataFrame, y: Any = None) -> "MetadataTransformer":  
         return self
 
-    def transform(self, X: pd.DataFrame) -> np.ndarray:  # noqa: N803
+    def transform(self, X: pd.DataFrame) -> np.ndarray:
         rows: list[list[float]] = []
         for _, row in X.iterrows():
             level = float(row.get("level", self._COLUMNS["level"]) or self._COLUMNS["level"])
             credits_ = float(row.get("credits", self._COLUMNS["credits"]) or self._COLUMNS["credits"])
             gpa = float(row.get("gpa_avg", self._COLUMNS["gpa_avg"]) or self._COLUMNS["gpa_avg"])
-            rows.append([level / 1000.0, credits_, gpa])
+            num_assignments = float(row.get("num_assignments", 0))
+            num_exams = float(row.get("num_exams", 0))
+            num_projects = float(row.get("num_projects", 0))
+
+            rows.append([
+                level / 1000.0,
+                credits_,
+                gpa,
+                num_assignments,
+                num_exams,
+                num_projects,
+            ])
         return np.array(rows, dtype=float)
 
 
-# ---------------------------------------------------------------------------
 # Pipeline builder
-# ---------------------------------------------------------------------------
 
 
 def build_text_pipeline() -> Pipeline:

@@ -1,12 +1,11 @@
 """Command-line interface for workload-guesser.
 
 Usage examples
---------------
-Train and run interactively::
+Do:
 
     python -m workload_guesser.cli
 
-Predict from command-line flags::
+Wait for a little while and then when prompt appears, predict from command-line flags:
 
     python -m workload_guesser.cli predict \\
         --department CS \\
@@ -34,9 +33,7 @@ import sys
 from workload_guesser.data import course_to_dataframe
 from workload_guesser.model import WorkloadPredictor
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
+# Helpers (quality of life)
 
 _WORKLOAD_EMOJI = {"low": "🟢", "medium": "🟡", "high": "🔴"}
 
@@ -51,10 +48,7 @@ def _print_prediction(label: str, proba: dict[str, float]) -> None:
         print(f"  {cat:6s}  {bar:<30s}  {proba.get(cat, 0.0):.1%}")
     print()
 
-
-# ---------------------------------------------------------------------------
 # Sub-command handlers
-# ---------------------------------------------------------------------------
 
 
 def cmd_train(args: argparse.Namespace) -> None:
@@ -83,6 +77,9 @@ def cmd_predict(args: argparse.Namespace) -> None:
         description=args.description,
         title=args.title or "",
         gpa_avg=args.gpa_avg,
+        num_assignments=num_assignments,
+        num_exams=num_exams,
+        num_projects=num_projects,
     )
 
     label = predictor.predict(df)[0]
@@ -108,12 +105,17 @@ def cmd_interactive(args: argparse.Namespace) -> None:  # noqa: ARG001
             level_str = input("  Course level (e.g. 1000, 3000): ").strip()
             credits_str = input("  Credits (e.g. 3): ").strip()
             description = input("  Course description: ").strip()
-            gpa_str = input("  Average GPA [leave blank to skip]: ").strip()
+            gpa_str = input("  Average GPA for the class [leave blank to skip]: ").strip()
+            assign_str = input("  Number of assignments [optional]: ").strip()
+            exam_str = input("  Number of exams [optional]: ").strip()
+            proj_str = input("  Number of projects [optional]: ").strip()
 
             level = int(level_str)
             credits_ = int(credits_str)
             gpa_avg = float(gpa_str) if gpa_str else None
-
+            num_assignments = int(assign_str) if assign_str else 0
+            num_exams = int(exam_str) if exam_str else 0
+            num_projects = int(proj_str) if proj_str else 0
         except (ValueError, EOFError) as exc:
             print(f"  Invalid input: {exc}. Please try again.\n")
             continue
@@ -132,11 +134,7 @@ def cmd_interactive(args: argparse.Namespace) -> None:  # noqa: ARG001
         proba = predictor.predict_proba(df)
         _print_prediction(label, proba)
 
-
-# ---------------------------------------------------------------------------
 # Argument parser
-# ---------------------------------------------------------------------------
-
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -145,13 +143,13 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command")
 
-    # --- train sub-command ---
+    # train sub-command
     train_p = sub.add_parser("train", help="Train the model and optionally save it.")
     train_p.add_argument("--data", metavar="CSV", help="Path to training CSV file.")
     train_p.add_argument("--save", metavar="PKL", help="Save trained model to this path.")
     train_p.set_defaults(func=cmd_train)
 
-    # --- predict sub-command ---
+    # predict sub-command 
     pred_p = sub.add_parser("predict", help="Predict workload for a single course.")
     pred_p.add_argument("--model", metavar="PKL", help="Path to a saved model file.")
     pred_p.add_argument("--department", required=True, help="Department code, e.g. CS.")
@@ -168,17 +166,13 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     pred_p.set_defaults(func=cmd_predict)
 
-    # --- interactive sub-command (default) ---
+    # interactive sub-command (default) 
     int_p = sub.add_parser("interactive", help="Start an interactive prompt session.")
     int_p.set_defaults(func=cmd_interactive)
 
     return parser
 
-
-# ---------------------------------------------------------------------------
-# Entry point
-# ---------------------------------------------------------------------------
-
+# MAIN * * * * * * * * 
 
 def main(argv: list[str] | None = None) -> None:
     parser = _build_parser()

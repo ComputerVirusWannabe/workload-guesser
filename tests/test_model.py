@@ -10,11 +10,7 @@ import pytest
 from workload_guesser.data import course_to_dataframe
 from workload_guesser.model import WorkloadPredictor
 
-
-# ---------------------------------------------------------------------------
 # Fixtures
-# ---------------------------------------------------------------------------
-
 
 @pytest.fixture(scope="module")
 def trained_predictor() -> WorkloadPredictor:
@@ -23,11 +19,7 @@ def trained_predictor() -> WorkloadPredictor:
     predictor.train()
     return predictor
 
-
-# ---------------------------------------------------------------------------
 # Initialisation
-# ---------------------------------------------------------------------------
-
 
 class TestInit:
     def test_unfitted_repr(self) -> None:
@@ -47,11 +39,7 @@ class TestInit:
             p.predict_proba(df)
 
 
-# ---------------------------------------------------------------------------
 # Training
-# ---------------------------------------------------------------------------
-
-
 class TestTrain:
     def test_train_returns_self(self) -> None:
         p = WorkloadPredictor(n_estimators=10)
@@ -63,11 +51,7 @@ class TestTrain:
         p.train()
         assert "fitted=True" in repr(p)
 
-
-# ---------------------------------------------------------------------------
 # Predict
-# ---------------------------------------------------------------------------
-
 
 class TestPredict:
     def test_returns_list(self, trained_predictor: WorkloadPredictor) -> None:
@@ -116,10 +100,7 @@ class TestPredict:
         result = trained_predictor.predict(df)
         assert result[0] in {"low", "medium"}
 
-
-# ---------------------------------------------------------------------------
 # predict_proba
-# ---------------------------------------------------------------------------
 
 
 class TestPredictProba:

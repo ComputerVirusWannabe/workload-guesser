@@ -1,32 +1,25 @@
 # Workload Guesser
 
 A machine-learning system that predicts the **difficulty and workload level**
-of UVA courses, helping students build balanced schedules before registration.
-
-## Problem
-
-Students at UVA often struggle to gauge how demanding a course will be.
-Course descriptions rarely reflect the true volume of homework, exams, and
-projects — leading to schedule overload, unnecessary stress, and late drops.
-
-## Solution
+of college courses, helping students build balanced schedules before registration.
 
 Workload Guesser combines **NLP-based text analysis** with **structured course
 metadata** to classify every course as one of three workload tiers:
 
 | Label  | Meaning |
 |--------|---------|
-| 🟢 **low**    | Light workload — few assignments, mostly exams or attendance-based |
-| 🟡 **medium** | Moderate workload — regular homework and a couple of exams |
-| 🔴 **high**   | Heavy workload — weekly assignments, multiple exams, and/or projects |
+| **low**    | Light workload — few assignments, mostly exams or attendance-based |
+| **medium** | Moderate workload — regular homework and a couple of exams |
+| **high**   | Heavy workload — weekly assignments, multiple exams, and/or projects |
 
-## Features used
+## Features
 
-| Feature group | Details |
-|---------------|---------|
+
 | **TF-IDF text** | Uni- and bi-gram frequencies over the free-text course description (up to 500 features) |
+| **Model training** | A random Forest classifier |
 | **Keyword counts** | Counts of workload-related words: *exam*, *midterm*, *assignment*, *project*, *weekly*, *rigorous*, … |
 | **Course metadata** | Normalised course level, credit hours, and average historical GPA |
+
 
 ## Installation
 
@@ -39,7 +32,7 @@ Python 3.9 or later is required.
 
 ## Usage
 
-### Interactive mode (default)
+### Interactive mode
 
 ```bash
 python -m workload_guesser.cli
@@ -47,8 +40,8 @@ python -m workload_guesser.cli
 workload-guesser
 ```
 
-The program trains on the built-in sample data, then prompts you for course
-details and prints a prediction with a confidence breakdown.
+The program trains on the built-in sample data, then prompts for course
+details and gives a prediction with a confidence breakdown.
 
 ### Command-line prediction
 
@@ -64,12 +57,12 @@ workload-guesser predict \
 Example output:
 
 ```
-Predicted workload: 🔴  HIGH
+Predicted workload:  HIGH
 
 Confidence breakdown:
-  low    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   3.0%
-  medium ████░░░░░░░░░░░░░░░░░░░░░░░░░░  12.5%
-  high   ██████████████████████████░░░░  84.5%
+  low      3.0%
+  medium  12.5%
+  high   84.5%
 ```
 
 ### Train and save a model
@@ -113,36 +106,13 @@ predictor.save("models/workload.pkl")
 loaded = WorkloadPredictor.load("models/workload.pkl")
 ```
 
-## Project layout
-
-```
-workload-guesser/
-├── workload_guesser/
-│   ├── __init__.py       – public API re-exports
-│   ├── features.py       – TF-IDF, keyword, and metadata feature extractors
-│   ├── model.py          – WorkloadPredictor (sklearn RandomForest pipeline)
-│   ├── data.py           – CSV loading, validation, and convenience helpers
-│   └── cli.py            – argparse CLI (train / predict / interactive)
-├── data/
-│   └── sample_courses.csv – 46 labelled UVA-style courses for training
-├── models/               – saved model artefacts (gitignored)
-├── tests/
-│   ├── conftest.py
-│   ├── test_features.py
-│   ├── test_model.py
-│   └── test_data.py
-├── requirements.txt
-├── pyproject.toml
-└── README.md
-```
-
 ## Running tests
 
 ```bash
 pytest
 ```
 
-## Training on your own data
+## Training on own data
 
 Prepare a CSV with at least these columns:
 
@@ -160,3 +130,5 @@ improve predictions when available.
 ```bash
 workload-guesser train --data my_courses.csv --save models/custom.pkl
 ```
+
+
