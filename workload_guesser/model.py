@@ -15,7 +15,6 @@ import joblib
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import Pipeline
 
@@ -112,9 +111,10 @@ class WorkloadPredictor:
                 ("features", build_feature_pipeline()),
                 (
                     "clf",
-                    LogisticRegression(
-                        max_iter=1000,
-                        class_weight="balanced"
+                    RandomForestClassifier(
+                        n_estimators=self.n_estimators,
+                        random_state=self.random_state,
+                        class_weight="balanced",
                     )
                 ),
             ]
