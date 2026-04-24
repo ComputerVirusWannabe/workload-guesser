@@ -8,10 +8,14 @@ Do:
 Wait for a little while and then when prompt appears, predict from command-line flags:
 
     python -m workload_guesser.cli predict \\
-        --department CS \\
+        --department CMSC \\
         --level 4000 \\
         --credits 3 \\
         --description "Weekly problem sets, two midterms and a final exam."
+
+Fetch a course directly from the UMD API and predict::
+
+    python -m workload_guesser.cli predict --umd-course CMSC351
 
 Save the trained model to disk::
 
@@ -29,6 +33,8 @@ from __future__ import annotations
 
 import argparse
 import sys
+
+import requests
 
 from workload_guesser.data import course_to_dataframe
 from workload_guesser.model import WorkloadPredictor
@@ -62,7 +68,7 @@ def cmd_train(args: argparse.Namespace) -> None:
 
 
 def cmd_predict(args: argparse.Namespace) -> None:
-    """Predict workload for a single course supplied via CLI flags."""
+    """Predict workload for a single course supplied via CLI flags or UMD course ID."""
     if args.model:
         predictor = WorkloadPredictor.load(args.model)
     else:
@@ -70,17 +76,48 @@ def cmd_predict(args: argparse.Namespace) -> None:
         predictor = WorkloadPredictor()
         predictor.train()
 
-    df = course_to_dataframe(
-        department=args.department,
-        level=args.level,
-        credits=args.credits,
-        description=args.description,
-        title=args.title or "",
-        gpa_avg=args.gpa_avg,
-        num_assignments=args.num_assignments,
-        num_exams=args.num_exams,
-        num_projects=args.num_projects,
-    )
+    if args.umd_course:
+        # Fetch course data from the UMD API and convert to DataFrame.
+        from workload_guesser.umd import fetch_course, umd_course_to_dataframe
+
+        print(f"Fetching course {args.umd_course!r} from the UMD API...")
+        try:
+            course = fetch_course(args.umd_course, semester=args.semester)
+        except (ValueError, requests.HTTPError, requests.ConnectionError, requests.Timeout) as exc:
+            print(f"Error fetching course from UMD API: {exc}", file=sys.stderr)
+            sys.exit(1)
+        df = umd_course_to_dataframe(course)
+        print(f"  {course.get('course_id', '')} — {course.get('name', '')}\n")
+    else:
+        # Require manual course details when not fetching from UMD.
+        missing = [
+            flag
+            for flag, val in [
+                ("--department", args.department),
+                ("--level", args.level),
+                ("--credits", args.credits),
+                ("--description", args.description),
+            ]
+            if val is None
+        ]
+        if missing:
+            print(
+                f"error: the following arguments are required when --umd-course is not "
+                f"given: {', '.join(missing)}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+        df = course_to_dataframe(
+            department=args.department,
+            level=args.level,
+            credits=args.credits,
+            description=args.description,
+            title=args.title or "",
+            gpa_avg=args.gpa_avg,
+            num_assignments=args.num_assignments,
+            num_exams=args.num_exams,
+            num_projects=args.num_projects,
+        )
 
     label = predictor.predict(df)[0]
     proba = predictor.predict_proba(df)
@@ -142,7 +179,7 @@ def cmd_interactive(args: argparse.Namespace) -> None:  # noqa: ARG001
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="workload-guesser",
-        description="Predict the workload level (low / medium / high) of a UVA course.",
+        description="Predict the workload level (low / medium / high) of a UMD course.",
     )
     sub = parser.add_subparsers(dest="command")
 
@@ -155,10 +192,25 @@ def _build_parser() -> argparse.ArgumentParser:
     # predict sub-command 
     pred_p = sub.add_parser("predict", help="Predict workload for a single course.")
     pred_p.add_argument("--model", metavar="PKL", help="Path to a saved model file.")
-    pred_p.add_argument("--department", required=True, help="Department code, e.g. CS.")
-    pred_p.add_argument("--level", required=True, type=int, help="Course level, e.g. 4000.")
-    pred_p.add_argument("--credits", required=True, type=int, help="Credit hours.")
-    pred_p.add_argument("--description", required=True, help="Free-text course description.")
+    pred_p.add_argument(
+        "--umd-course",
+        dest="umd_course",
+        metavar="COURSE_ID",
+        help=(
+            "Fetch course data from the UMD API by course ID (e.g. CMSC351) "
+            "instead of supplying details manually."
+        ),
+    )
+    pred_p.add_argument(
+        "--semester",
+        metavar="YYYYMM",
+        default=None,
+        help="Semester code for UMD API lookup, e.g. 202308 (optional).",
+    )
+    pred_p.add_argument("--department", default=None, help="Department code, e.g. CMSC.")
+    pred_p.add_argument("--level", type=int, default=None, help="Course level, e.g. 4000.")
+    pred_p.add_argument("--credits", type=int, default=None, help="Credit hours.")
+    pred_p.add_argument("--description", default=None, help="Free-text course description.")
     pred_p.add_argument("--title", default="", help="Course title (optional).")
     pred_p.add_argument(
         "--gpa-avg",

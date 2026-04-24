@@ -10,11 +10,11 @@ from workload_guesser.data import course_to_dataframe
 
 @pytest.fixture()
 def sample_df() -> pd.DataFrame:
-    """A tiny DataFrame representative of courses at each workload level."""
+    """A tiny DataFrame representative of UMD courses at each workload level."""
     return pd.DataFrame(
         [
             {
-                "department": "KINE",
+                "department": "KNES",
                 "level": 1000,
                 "credits": 1,
                 "description": "Pass/fail attendance-based activity course. No exams or assignments.",
@@ -38,7 +38,7 @@ def sample_df() -> pd.DataFrame:
                 "gpa_avg": 3.0,
             },
             {
-                "department": "CS",
+                "department": "CMSC",
                 "level": 4000,
                 "credits": 3,
                 "description": (
@@ -54,9 +54,9 @@ def sample_df() -> pd.DataFrame:
 
 @pytest.fixture()
 def single_course_df() -> pd.DataFrame:
-    """A one-row DataFrame for a single high-workload course."""
+    """A one-row DataFrame for a single high-workload UMD course."""
     return course_to_dataframe(
-        department="CS",
+        department="CMSC",
         level=4000,
         credits=3,
         description=(
