@@ -75,7 +75,7 @@ class TestPredict:
     def test_high_workload_course(self, trained_predictor: WorkloadPredictor) -> None:
         """A course with many exams/assignments should predict medium or high."""
         df = course_to_dataframe(
-            department="CS",
+            department="CMSC",
             level=4000,
             credits=3,
             description=(
@@ -91,7 +91,7 @@ class TestPredict:
     def test_low_workload_course(self, trained_predictor: WorkloadPredictor) -> None:
         """A light activity/performance course should predict low or medium."""
         df = course_to_dataframe(
-            department="KINE",
+            department="KNES",
             level=1000,
             credits=1,
             description="Pass/fail activity course. Attendance only. No exams.",
